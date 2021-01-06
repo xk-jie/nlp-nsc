@@ -1,0 +1,26 @@
+default:
+  - seed: 2020
+  - k: 8
+  - lr: 2e-5
+  - eps: 1e-8
+  - epochs: 5
+  - show_epoch_loss: False
+  - num_ate_labels: 6
+  - ate_label_list: ["O", "B-ASP", "I-ASP", "[CLS]", "[SEP]"]
+  - max_grad_norm: 1.0
+  - hidden_dropout: 0.2
+  - bert_name: 'bert-base-uncased'
+  - model_path: 'model_state_dict.pkl'
+  - submit_path: 'submission.csv'
+  - submit_csv_columns: ['word', 'lab', 'prediction']
+
+current_config: config1
+config1:
+  - batch_size: 64
+  - max_seq_len: 128
+  - loss_step: 200
+config2:
+  - corpus_size: 10
+  - batch_size: 4
+  - max_seq_len: 20
+  - loss_step: 2
