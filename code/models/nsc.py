@@ -198,40 +198,6 @@ class NscModel(object):
 
         return predictions
 
-    def predict2(self):
-        self.load_model()
-        self.model.eval()
-        from transformers import BertTokenizer
-
-        bert_tokenizer = BertTokenizer.from_pretrained(config['bert_name'])
-        sentence = ['received', 'my', 'google', 'wave', 'account', 'today', '!', 'sorry', 'have', 'no', 'invites', ',', 'but', 'i', 'will', 'spread', 'the', 'love', 'if', 'i', 'receive', 'any', ',', 'thanks', 'twitter', 'community', '!']
-        encode_dict = bert_tokenizer.encode_plus(
-            sentence,
-            add_special_tokens=True,
-            truncation='longest_first',
-            max_length=config['max_seq_len'],
-            padding='max_length',
-            return_attention_mask=True,
-            return_tensors='pt'
-        )
-
-        batch = {}
-        batch['input_ids'] = encode_dict['input_ids']
-        batch['attention_mask'] = encode_dict['attention_mask']
-        batch['token_type_ids'] = encode_dict['token_type_ids']
-
-        with torch.no_grad():
-            inputs = self.input_features(batch)
-            output = self.model(**inputs)
-
-        prediction = torch.max(output, 1)[1].detach().cpu().numpy().flatten()
-        ate_label_map = {word: i for i, word in enumerate(['O', 'B-ASP', 'I-ASP', '[CLS]', '[SEP]'], 1)}
-        inverse_map = dict([val, key] for key, val in ate_label_map.items())
-
-        print(sentence)
-        x = [inverse_map.get(i, 'X') for i in prediction]
-        print(x)
-
     def input_features(self, batch):
         return {
             'input_ids': batch['input_ids'].to(self.device),
