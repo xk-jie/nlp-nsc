@@ -1,5 +1,5 @@
 # nlp-nsc
-
+## note
 - Neural Sentiment Classification
 - bert
 - only do aspect term extraction to classification
