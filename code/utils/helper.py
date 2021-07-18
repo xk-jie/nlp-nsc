@@ -10,11 +10,15 @@ from configs.config import Config
 
 config = Config.yaml_config()
 
-def set_seed(seed):
+def set_seed_cudnn(seed):
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
+    torch.backends.cudnn.enabled = False 
+    torch.backends.cudnn.benchmark = False
+    torch.backends.cudnn.deterministic = True
 
 def show_dataframe(df):
     # show all dataframe data
