@@ -10,7 +10,7 @@ from configs.config import Config
 
 config = Config.yaml_config()
 
-def set_seed_cudnn(seed):
+def set_seed_cudnn(seed=1):
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
